@@ -40,12 +40,12 @@ Appointment.init(
       allowNull: false,
     },
 
-    start_time: {
+    startTime: {
       type: DataTypes.TIME,
       allowNull: true,
     },
 
-    end_time: {
+    endTime: {
       type: DataTypes.TIME,
       allowNull: true,
     },

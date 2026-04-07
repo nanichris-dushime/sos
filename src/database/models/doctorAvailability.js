@@ -10,14 +10,26 @@ DoctorAvailability.init({
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true
     },
-    doctorId: {
+    doctor_id: {
         type: DataTypes.UUID,
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: "users",
+            key: "id"
+        }
     },
     day: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM(
+            'Monday',
+             'Tuesday',
+              'Wednesday',
+               'Thursday',
+                'Friday',
+                 'Saturday',
+                  'Sunday'),
         allowNull: false
     },
+    
     startTime: {
         type: DataTypes.TIME,
         allowNull: false
@@ -26,11 +38,23 @@ DoctorAvailability.init({
         type: DataTypes.TIME,
         allowNull: false
     }
+
+    
 }, {
     sequelize,
     modelName: "DoctorAvailability",
     tableName: "doctor_availability",
-    timestamps: true
+    timestamps: true,
+
+    validate:{
+        isValidTimeRange(){
+            if(this.startTime >= this.endTime){
+                throw new Error("Start time must be before end time");
+            }
+    }
+}
+
+
 });
 
 export default DoctorAvailability;

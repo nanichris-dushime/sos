@@ -70,8 +70,9 @@ export const seedAppointments = async () => {
         approved_by: doctor.id,
         approved_at: new Date(),
       },
-      await Appointment.bulkCreate(appointments)
     ];
+
+    await Appointment.bulkCreate(appointments);
 
     console.log("✅ Appointments seeded successfully");
   } catch (error) {

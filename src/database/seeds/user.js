@@ -5,7 +5,7 @@ export const seedUsers=async()=>{
     const users=[
         {
             fullName:'DUSHIME',
-            email:'dushimenanichris@gmail.com',
+            email:'dushimen@gmail.com',
             phoneNumber:'0788306030',
             gender:'male',
             status:'active',
@@ -17,7 +17,7 @@ export const seedUsers=async()=>{
         },
           {
             fullName:'NANI',
-            email:'nanichris@gmail.com',
+            email:'naichr@gmail.com',
             phoneNumber:'0788306031',
             gender:'male',
             status:'active',
@@ -28,7 +28,7 @@ export const seedUsers=async()=>{
             
         },  {
             fullName:'CHRIS',
-            email:'dushime@gmail.com',
+            email:'dushimechriss@gmail.com',
             phoneNumber:'0788306032',
             gender:'male',
             status:'active',
@@ -37,7 +37,34 @@ export const seedUsers=async()=>{
             emergency_contact:"250792835101",
             password:hashPassword
             
-        }
+        },// Doctor user
+     {
+            fullName:'DR. SMITH',
+            email:'smith@gmail.com',
+            phoneNumber:'0788306033',
+            gender:'male',
+            status:'active',
+            date_of_birth:'12-02-1980',
+            location:'kigali',
+            emergency_contact:"250792835103",
+            password:hashPassword,
+            role:'doctor'
+            
+        },
+
+    {
+            fullName:'DR. JANE DOE',
+            email:'jane@gmail.com',
+            phoneNumber:'0788306034',
+            gender:'female',
+            status:'active',
+            date_of_birth:'12-02-1985',
+            location:'kigali',
+            emergency_contact:"250792835104",
+            password:hashPassword,
+            role:'doctor'
+    }
+    
     ]
     await User.bulkCreate(users);
 }
