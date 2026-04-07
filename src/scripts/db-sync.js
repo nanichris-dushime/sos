@@ -1,6 +1,9 @@
 import sequelize from "../config/db.js";
 import "../database/index.js";
+import  {seedUsers}  from "../database/seeds/user.js";
+import { seedAppointment } from "../database/seeds/appointment.js";
 import { createUserTable } from "../database/migrations/users.js";
+import { createAppointmentTable} from "../database/migrations/appointments.js"
 
 const syncDatabase = async () => {
     try {
@@ -8,7 +11,10 @@ const syncDatabase = async () => {
         await sequelize.authenticate();
         console.log("Database connection established successfully");
         await createUserTable();
+        await createAppointmentTable();
         await sequelize.sync({ alter: true, logging: false });
+        await seedUsers(),
+        await seedAppointment(),
         console.log("Database synced successfully 🔥🔥🔥🔥🔥🔥");
         process.exit(0);
     } catch (error) {

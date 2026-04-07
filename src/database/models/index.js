@@ -3,6 +3,7 @@ import User from "./users.js";
 
 const db={
     sequelize,
-    User
+    User,
+    
 }
 export default db;

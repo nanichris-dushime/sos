@@ -3,17 +3,18 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node index.js",
-    "db:sync":"node ./src/scripts/db-sync.js"
+    "db:sync": "node ./src/scripts/db-sync.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
+  
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
