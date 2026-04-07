@@ -1,10 +1,11 @@
 import sequelize from "../config/db.js";
 import "../database/index.js";
 import  {seedUsers}  from "../database/seeds/user.js";
-import { seedAppointment } from "../database/seeds/appointment.js";
+import { seedAppointments } from "../database/seeds/appointment.js";
 import { createUserTable } from "../database/migrations/users.js";
 import { createAppointmentTable} from "../database/migrations/appointments.js"
-
+import {createDoctorAvailabilityTable} from "../database/migrations/doctorAvailability.js";
+import { createNotificationTable } from "../database/migrations/notifications.js";
 const syncDatabase = async () => {
     try {
         console.log("Starting database sync...");
@@ -12,9 +13,11 @@ const syncDatabase = async () => {
         console.log("Database connection established successfully");
         await createUserTable();
         await createAppointmentTable();
+        await createDoctorAvailabilityTable();
+        await createNotificationTable();
         await sequelize.sync({ alter: true, logging: false });
         await seedUsers(),
-        await seedAppointment(),
+        await seedAppointments(),
         console.log("Database synced successfully 🔥🔥🔥🔥🔥🔥");
         process.exit(0);
     } catch (error) {

@@ -1,8 +1,9 @@
 import sequelize from "../../config/db.js";
-import doctorAvailability from "../models/doctorAvailability.js";
+import DoctorAvailability from "../models/doctorAvailability.js";
 
-export const createdoctorAvailabilityTable = async () => {
+
+export const createDoctorAvailabilityTable = async () => {
     await sequelize.authenticate();
-    await User.sync({ alter: true, logging: false });
-    console.log("Doctot Availability table created successfully🔥🔥🔥🔥🔥🔥");
+    await DoctorAvailability.sync({ alter: true, logging: false });
+    console.log("Doctor Availability table created successfully🔥🔥🔥🔥🔥🔥");
 }

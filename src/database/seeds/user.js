@@ -5,7 +5,7 @@ export const seedUsers=async()=>{
     const users=[
         {
             fullName:'DUSHIME',
-            email:'dushimenani@gmail.com',
+            email:'dushimenanichris@gmail.com',
             phoneNumber:'0788306030',
             gender:'male',
             status:'active',
@@ -17,7 +17,7 @@ export const seedUsers=async()=>{
         },
           {
             fullName:'NANI',
-            email:'nani@gmail.com',
+            email:'nanichris@gmail.com',
             phoneNumber:'0788306031',
             gender:'male',
             status:'active',
@@ -28,7 +28,7 @@ export const seedUsers=async()=>{
             
         },  {
             fullName:'CHRIS',
-            email:'chris@gmail.com',
+            email:'dushime@gmail.com',
             phoneNumber:'0788306032',
             gender:'male',
             status:'active',
