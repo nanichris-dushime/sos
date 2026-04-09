@@ -3,13 +3,13 @@ import { getAllUsers,singleUser,createUser, updateUser,deleteUser} from "../cont
     
 
 
-const router = express.Router();
-router.get("/api/getAllUsers", getAllUsers);
-router.get("/api/getSingleUser/:id", singleUser);
-router.put("/api/updateUser/:id", updateUser);
-router.post("/api/createUser", createUser);
-router.delete("/api/removeUser/:id", deleteUser);
+const UserRoutes = express.Router();
+UserRoutes.get("/api/getAllUsers", getAllUsers);
+UserRoutes.get("/api/getSingleUser/:id", singleUser);
+UserRoutes.put("/api/updateUser/:id", updateUser);
+UserRoutes.post("/api/createUser", createUser);
+UserRoutes.delete("/api/removeUser/:id", deleteUser);
 
 
 
-export default router;
+export default UserRoutes;
