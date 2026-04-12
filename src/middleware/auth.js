@@ -14,4 +14,18 @@ const protect=(req,res,next)=>{
         res.status(401).json({message:"Invalid or expired token"}); 
     }
 }
+
+// This middleware checks if the logged in user is an admin.
+// We use it on routes that should only be accessed by admins.
+export const isAdmin=(req,res,next)=>{
+    if(!req.user){
+        return res.status(401).json({message:"Unauthorized"});
+    }
+
+    if(req.user.role!=="admin"){
+        return res.status(403).json({message:"Access denied. Admin only"});
+    }
+
+    next();
+}
 export default protect;

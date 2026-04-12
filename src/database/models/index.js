@@ -1,9 +1,8 @@
 import sequelize from "../../config/db.js";
 import Appointment from "./appointments.js";
 import DoctorAvailability from "./doctorAvailability.js";
+import Notification from "./notifications.js";
 import User from "./users.js";
-import Appointment from "./appointments.js";
-import DoctorAvailability from "./doctorAvailability.js";
 
 const db={
     sequelize,
@@ -24,6 +23,14 @@ Appointment.belongsTo(User, { foreignKey: "doctor_id", as: "doctor" });
 Appointment.belongsTo(User, { foreignKey: "approved_by", as: "approver" });
 // Cancelled by
 Appointment.belongsTo(User, { foreignKey: "cancelled_by", as: "canceller" });
+
+// User notifications
+User.hasMany(Notification, { foreignKey: "userId", as: "notifications" });
+Notification.belongsTo(User, { foreignKey: "userId", as: "user" });
+
+// Doctor availability belongs to a doctor user
+User.hasMany(DoctorAvailability, { foreignKey: "doctor_id", as: "doctorAvailability" });
+DoctorAvailability.belongsTo(User, { foreignKey: "doctor_id", as: "doctor" });
 
 // Doctor availability → appointments
 DoctorAvailability.hasMany(Appointment, {
