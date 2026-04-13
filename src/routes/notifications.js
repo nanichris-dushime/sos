@@ -10,10 +10,10 @@ import {
 const NotificationRoutes=express.Router();
 
 // Basic notification CRUD routes
-NotificationRoutes.get("/notifications", getAllNotifications);
-NotificationRoutes.get("/notifications/:id", getSingleNotification);
-NotificationRoutes.post("/notifications", createNotification);
-NotificationRoutes.put("/notifications/:id", updateNotification);
-NotificationRoutes.delete("/notifications/:id", deleteNotification);
+NotificationRoutes.get("/api/notifications", getAllNotifications);
+NotificationRoutes.get("/api/notifications/:id", getSingleNotification);
+NotificationRoutes.post("/api/notifications", createNotification);
+NotificationRoutes.put("/api/notifications/:id", updateNotification);
+NotificationRoutes.delete("/api/notifications/:id", deleteNotification);
 
 export default NotificationRoutes;

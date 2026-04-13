@@ -5,7 +5,7 @@ import protect, { isAdmin } from "../middleware/auth.js";
 
 
 const UserRoutes = express.Router();
-UserRoutes.get("/api/getAllUsers", protect, isAdmin, getAllUsers);
+UserRoutes.get("/api/getAllUsers", getAllUsers);
 UserRoutes.get("/api/getSingleUser/:id", singleUser);
 UserRoutes.put("/api/updateUser/:id", updateUser);
 UserRoutes.post("/api/createUser", createUser);

@@ -10,10 +10,10 @@ import {
 const DoctorAvailabilityRoutes=express.Router();
 
 // Basic doctor availability CRUD routes
-DoctorAvailabilityRoutes.get("/doctorAvailability", getAllDoctorAvailability);
-DoctorAvailabilityRoutes.get("/doctorAvailability/:id", getSingleDoctorAvailability);
-DoctorAvailabilityRoutes.post("/doctorAvailability", createDoctorAvailability);
-DoctorAvailabilityRoutes.put("/doctorAvailability/:id", updateDoctorAvailability);
-DoctorAvailabilityRoutes.delete("/doctorAvailability/:id", deleteDoctorAvailability);
+DoctorAvailabilityRoutes.get("/api/doctorAvailability", getAllDoctorAvailability);
+DoctorAvailabilityRoutes.get("/api/doctorAvailability/:id", getSingleDoctorAvailability);
+DoctorAvailabilityRoutes.post("/api/doctorAvailability", createDoctorAvailability);
+DoctorAvailabilityRoutes.put("/api/doctorAvailability/:id", updateDoctorAvailability);
+DoctorAvailabilityRoutes.delete("/api/doctorAvailability/:id", deleteDoctorAvailability);
 
 export default DoctorAvailabilityRoutes;
