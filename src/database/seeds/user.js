@@ -63,6 +63,18 @@ export const seedUsers=async()=>{
             emergency_contact:"250792835104",
             password:hashPassword,
             role:'doctor'
+    },
+    {
+        fullName:"Administrator",
+        email:"admin@outlook.com",
+        phoneNumber:"0788306035",
+        gender:"male",
+        role:"admin",
+        status:"active",
+        date_of_birth:"01-01-1990",
+        location:"kigali",
+        emergency_contact:"250792835105",
+        password:hashPassword
     }
     
     ]

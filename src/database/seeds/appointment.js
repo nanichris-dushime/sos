@@ -1,4 +1,5 @@
 import Appointment from "../models/appointments.js";
+import DoctorAvailability from "../models/doctorAvailability.js";
 import User from "../models/users.js";
 
 export const seedAppointments = async () => {
@@ -18,6 +19,7 @@ export const seedAppointments = async () => {
 
     const appointments = [
       {
+        
         patient_id: patient1.id,
         doctor_id: doctor.id,
         appointment_date: "2026-04-10",
