@@ -134,3 +134,34 @@ export const cancelAppointment=async(req,res)=>{
         res.status(500).json({error:error.message});
     }
 }
+
+//approve an appointment and notify the patient
+export const approveAppointment=async(req,res)=>{
+    try {
+        const appointment=await Appointment.findByPk(req.params.id);
+
+        if(!appointment){
+            return res.status(404).json({error:"Appointment not found"});
+        }
+
+        await appointment.update({
+            status:"approved",
+            approved_at:new Date(),
+            approved_by:req.user?.id || appointment.doctor_id
+        });
+
+        // After approval, we create a notification for the patient.
+        await Notification.create({
+            userId:appointment.patient_id,
+            title:"Appointment Approved",
+            message:"Your appointment has been approved by the doctor."
+        });
+
+        res.status(200).json({
+            message:"Appointment approved successfully",
+            appointment
+        });
+    } catch (error) {
+        res.status(500).json({error:error.message});
+    }
+}   

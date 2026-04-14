@@ -9,7 +9,7 @@ UserRoutes.get("/api/getAllUsers", getAllUsers);
 UserRoutes.get("/api/getSingleUser/:id", singleUser);
 UserRoutes.put("/api/updateUser/:id", updateUser);
 UserRoutes.post("/api/createUser", createUser);
-UserRoutes.delete("/api/removeUser/:id", protect, isAdmin, deleteUser);
+UserRoutes.delete("/api/removeUser/:id", deleteUser);
 
 
 

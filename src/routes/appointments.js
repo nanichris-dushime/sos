@@ -7,7 +7,10 @@ import {
     updateAppointment,
     deleteAppointment,
     getDoctorAppointments,
-    cancelAppointment
+    cancelAppointment,
+    approveAppointment,
+    
+
 } from "../controller/appointments.js";
 
 const AppointmentRoutes=express.Router();
@@ -24,5 +27,7 @@ AppointmentRoutes.get("/api/doctor/appointments/:doctorId", getDoctorAppointment
 
 // This route lets a doctor cancel an appointment and notify the patient.
 AppointmentRoutes.put("/api/appointments/cancel/:id", protect, cancelAppointment);
+//This rout leta a doctor accept an appointment and notify the patient.
+AppointmentRoutes.put("/api/appointments/approve/:id", protect, approveAppointment);
 
 export default AppointmentRoutes;
