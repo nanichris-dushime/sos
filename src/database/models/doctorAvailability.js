@@ -1,60 +1,61 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../../config/db.js";
 
-
+/** Recurring weekday availability: which day the doctor takes patients and on/off flag. */
 class DoctorAvailability extends Model {}
 
-DoctorAvailability.init({
+const WEEKDAYS = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
+
+DoctorAvailability.init(
+  {
     id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        primaryKey: true
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+      allowNull: false,
     },
-    doctor_id: {
-        type: DataTypes.UUID,
-        allowNull: false,
-        references: {
-            model: "users",
-            key: "id"
-        }
+    doctorId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      // MySQL table still uses legacy column name from earlier schema
+      field: "doctor_id",
     },
     day: {
-        type: DataTypes.ENUM(
-            'Monday',
-             'Tuesday',
-              'Wednesday',
-               'Thursday',
-                'Friday',
-                 'Saturday',
-                  'Sunday'),
-        allowNull: false
+      type: DataTypes.ENUM(...WEEKDAYS),
+      allowNull: false,
     },
-    
-    startTime: {
-        type: DataTypes.TIME,
-        allowNull: false
+    available: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
     },
-    endTime: {
-        type: DataTypes.TIME,
-        allowNull: false
-    }
-
-    
-}, {
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+  },
+  {
     sequelize,
     modelName: "DoctorAvailability",
     tableName: "doctor_availability",
     timestamps: true,
-
-    validate:{
-        isValidTimeRange(){
-            if(this.startTime >= this.endTime){
-                throw new Error("Start time must be before end time");
-            }
-    }
-}
-
-
-});
+    // No DB unique index here: Sequelize emits index columns as attribute names (`doctorId`),
+    // which breaks when `field: "doctor_id"` maps the column. Uniqueness is enforced in the controller.
+  }
+);
 
 export default DoctorAvailability;

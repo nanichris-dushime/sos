@@ -1,5 +1,5 @@
 import sequelize from "../config/db.js";
-import "../database/index.js";
+import "../database/models/index.js";
 import  {seedUsers}  from "../database/seeds/user.js";
 import { seedAppointments } from "../database/seeds/appointment.js";
 import { seedDoctorAvailability } from "../database/seeds/doctorAvailability.js";

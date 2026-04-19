@@ -1,24 +1,22 @@
 import DoctorAvailability from "../models/doctorAvailability.js";
+import User from "../models/users.js";
 
 export const seedDoctorAvailability = async () => {
   try {
-    const data = [
-      {
-        doctor_id: "3d669dcd-be2f-417e-8523-f70757a8f0c5",
-        day: "Monday",
-        startTime: "08:00:00",
-        endTime: "17:00:00"
-      },
-      {
-        doctor_id: "c424d3aa-9c4d-482c-a1d3-1a1b3dde1a4b",
-        day: "Tuesday",
-        startTime: "08:00:00",
-        endTime: "17:00:00"
-      }
-      ];
+    const doctors = await User.findAll({ where: { role: "doctor" } });
+    if (!doctors.length) {
+      console.log("Skipping doctor availability seed: no doctors in DB");
+      return;
+    }
 
-    await DoctorAvailability.bulkCreate(data);
+    const rows = doctors.flatMap((doc) => [
+      { doctorId: doc.id, day: "Monday", available: true },
+      { doctorId: doc.id, day: "Wednesday", available: true },
+      { doctorId: doc.id, day: "Friday", available: true },
+      { doctorId: doc.id, day: "Sunday", available: false },
+    ]);
 
+    await DoctorAvailability.bulkCreate(rows);
     console.log("Doctor availability seeded successfully ✅");
   } catch (error) {
     console.error("Error seeding doctor availability ❌", error);

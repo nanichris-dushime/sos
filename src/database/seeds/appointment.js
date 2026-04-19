@@ -1,81 +1,56 @@
 import Appointment from "../models/appointments.js";
-import DoctorAvailability from "../models/doctorAvailability.js";
 import User from "../models/users.js";
 
 export const seedAppointments = async () => {
   try {
-    // Get users from DB
-    const users = await User.findAll();
+    const patients = await User.findAll({ where: { role: "patient" } });
+    const doctors = await User.findAll({ where: { role: "doctor" } });
 
-    if (users.length < 2) {
-      console.log("❌ Not enough users to create appointments");
+    if (patients.length < 2 || !doctors.length) {
+      console.log("Skipping appointment seed: need at least 2 patients and 1 doctor");
       return;
     }
 
-    // Assign roles (for demo)
-    const patient1 = users[0];
-    const patient2 = users[1];
-    const doctor = users[2]; // assume 3rd user is doctor
+    const patient1 = patients[0];
+    const patient2 = patients[1];
+    const doctor = doctors[0];
 
     const appointments = [
       {
-        
-        patient_id: patient1.id,
-        doctor_id: doctor.id,
-        appointment_date: "2026-04-10",
-        appointment_time: "10:00:00",
-        start_time: "10:05:00",
-        end_time: "10:30:00",
-        duration: 25,
-        status: "approved",
+        doctorId: doctor.id,
+        patientId: patient1.id,
+        appointmentDate: "2026-04-10",
+        appointmentTime: "09:00-10:00",
+        status: "scheduled",
         reason: "General checkup",
-        doctor_notes: "Patient is stable",
-        location: "Kigali Health Center",
-        approved_by: doctor.id,
-        approved_at: new Date(),
       },
-
       {
-        patient_id: patient2.id,
-        doctor_id: doctor.id,
-        appointment_date: "2026-04-11",
-        appointment_time: "14:00:00",
+        doctorId: doctor.id,
+        patientId: patient2.id,
+        appointmentDate: "2026-04-11",
+        appointmentTime: "10:00-11:00",
         status: "pending",
         reason: "Headache and fever",
-        location: "Online Consultation",
       },
-
       {
-        patient_id: patient1.id,
-        doctor_id: doctor.id,
-        appointment_date: "2026-04-12",
-        appointment_time: "09:00:00",
+        doctorId: doctor.id,
+        patientId: patient1.id,
+        appointmentDate: "2026-04-12",
+        appointmentTime: "14:00-15:00",
         status: "cancelled",
         reason: "Follow-up visit",
-        cancelled_by: patient1.id,
-        cancelled_at: new Date(),
-        cancellation_reason: "Feeling better, no longer needed",
       },
-
       {
-        patient_id: patient2.id,
-        doctor_id: doctor.id,
-        appointment_date: "2026-04-13",
-        appointment_time: "16:00:00",
-        start_time: "16:10:00",
-        end_time: "16:40:00",
-        duration: 30,
+        doctorId: doctor.id,
+        patientId: patient2.id,
+        appointmentDate: "2026-04-13",
+        appointmentTime: "09:00-10:00",
         status: "completed",
         reason: "Back pain",
-        doctor_notes: "Prescribed medication",
-        location: "Kigali Hospital",
-        approved_by: doctor.id,
-        approved_at: new Date(),
       },
     ];
 
     await Appointment.bulkCreate(appointments);
-
     console.log("✅ Appointments seeded successfully");
   } catch (error) {
     console.error("❌ Error seeding appointments:", error);

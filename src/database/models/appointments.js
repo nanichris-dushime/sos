@@ -1,119 +1,63 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../../config/db.js";
 
+/** Matches santech: date + string time slot (e.g. "09:00-10:00") from doctor availability. */
 class Appointment extends Model {}
 
 Appointment.init(
   {
-    
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       allowNull: false,
     },
-
-
-    patient_id: {
+    doctorId: {
       type: DataTypes.UUID,
-      allowNull: false,
       references: {
         model: "users",
         key: "id",
       },
-    },
-
-    doctor_id: {
-      type: DataTypes.UUID,
       allowNull: false,
+      field: "doctor_id",
+    },
+    patientId: {
+      type: DataTypes.UUID,
       references: {
         model: "users",
         key: "id",
       },
+      allowNull: false,
+      field: "patient_id",
     },
-
-    appointment_date: {
+    appointmentDate: {
       type: DataTypes.DATEONLY,
       allowNull: false,
+      field: "appointment_date",
     },
-
-    appointment_time: {
-      type: DataTypes.TIME,
+    appointmentTime: {
+      type: DataTypes.STRING,
       allowNull: false,
+      field: "appointment_time",
     },
-
-    startTime: {
-      type: DataTypes.TIME,
-      allowNull: true,
-    },
-
-    endTime: {
-      type: DataTypes.TIME,
-      allowNull: true,
-    },
-
-    duration: {
-      type: DataTypes.INTEGER, // duration in minutes
-      allowNull: true,
-    },
-
-    status: {
-      type: DataTypes.ENUM(
-        "pending",
-        "approved",
-        "rejected",
-        "completed",
-        "cancelled"
-      ),
-      defaultValue: "pending",
-    },
-
     reason: {
       type: DataTypes.TEXT,
-      allowNull: true,
+      allowNull: false,
     },
-
-    doctor_notes: {
-      type: DataTypes.TEXT,
-      allowNull: true,
+    status: {
+      type: DataTypes.ENUM("pending", "scheduled", "completed", "cancelled"),
+      allowNull: false,
+      defaultValue: "pending",
     },
-
-    location: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-
-    approved_by: {
-      type: DataTypes.UUID,
-      allowNull: true,
-      references: {
-        model: "users",
-        key: "id",
-      },
-    },
-
-    approved_at: {
+    createdAt: {
       type: DataTypes.DATE,
-      allowNull: true,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
     },
-
-    cancelled_by: {
-      type: DataTypes.UUID,
-      allowNull: true,
-      references: {
-        model: "users",
-        key: "id",
-      },
-    },
-
-    cancelled_at: {
+    updatedAt: {
       type: DataTypes.DATE,
-      allowNull: true,
-    },
-
-    cancellation_reason: {
-      type: DataTypes.TEXT,
-      allowNull: true,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
     },
   },
   {
@@ -121,8 +65,6 @@ Appointment.init(
     modelName: "Appointment",
     tableName: "appointments",
     timestamps: true,
-    createdAt: "created_at",
-    updatedAt: "updated_at",
   }
 );
 

@@ -1,70 +1,87 @@
-import { DataTypes,Model } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import sequelize from "../../config/db.js";
 
-class User extends Model{}
+class User extends Model {}
 
-User.init({
-    id:{
-        type:DataTypes.UUID,
-        defaultValue:DataTypes.UUIDV4,
-        allowNull:false,
-        primaryKey:true
+User.init(
+  {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+      allowNull: false,
     },
-    fullName:{
-        type:DataTypes.STRING,
-        allowNull:false
+    // API uses santech names; DB may still use original SOS column names — map with `field`.
+    fullname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: "fullName",
     },
-    email:{
-        type:DataTypes.STRING,
-        allowNull:true,
-        unique:true
+    email: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      unique: true,
     },
-    phoneNUmber:{
-        type:DataTypes.STRING,
-        allowNull:true
+    password: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
-    password:{
-        type:DataTypes.STRING,
-        allowNull:false
+    dob: {
+      type: DataTypes.DATEONLY,
+      allowNull: true,
+      field: "date_of_birth",
     },
-    role:{
-        type:DataTypes.STRING,
-        enum:['patient','doctor','admin'],
-        type:DataTypes.STRING,
-        defaultValue:'patient',
-        allowNull:false
+    gender: {
+      type: DataTypes.ENUM("male", "female", "other"),
+      allowNull: true,
     },
-    date_of_birth:{
-        type:DataTypes.DATE,
-        allowNull:true
+    profilePicture: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: "profile_image",
     },
-    gender:{
-        type:DataTypes.STRING,
-        enum:['male','female','others']
+    status: {
+      // Keep legacy DB values compatible during `sync({ alter: true })`
+      // (older SOS data may contain `blocked`; some reference data used `broked`).
+      type: DataTypes.ENUM("active", "inactive", "blocked", "broked"),
+      allowNull: false,
+      defaultValue: "active",
     },
-    profile_image:{
-        type:DataTypes.STRING,
-        enum:['male','female','others'],
+    emergencyContact: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: "emergency_contact",
     },
-    status:{
-        type:DataTypes.STRING,
-        enum:['active','inactive','blocked']
+    PhoneNumber: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: "phoneNumber",
     },
-     emergency_contact:{
-      type:DataTypes.STRING,
-      allowNull:true
+    location: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
-      location:{
-        type:DataTypes.STRING,
-        allowNull:true
-      }
-
-},{
+    role: {
+      type: DataTypes.ENUM("patient", "doctor", "admin"),
+      allowNull: false,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+  },
+  {
     sequelize,
-    modelName:'User',
-    tableName:'users',
-    timestamps:true
+    modelName: "User",
+    tableName: "users",
+    timestamps: true,
+  }
+);
 
-})
-
-export default User
+export default User;

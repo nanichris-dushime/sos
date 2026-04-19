@@ -1,7 +1,8 @@
-import "./models/users.js";
-import "./models/appointments.js";
-import "./models/doctorAvailability.js";
-import "./models/notifications.js";
-import User from "./models/users.js";
-import Appointment from "./models/appointments.js";
+/**
+ * Loads Sequelize models and associations (single import point for scripts / app).
+ */
+import sequelize from "../config/db.js";
+import db from "./models/index.js";
 
+export { sequelize };
+export default db;

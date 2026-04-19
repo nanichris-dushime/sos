@@ -1,8 +1,8 @@
 import express from "express";
-import { Register,Login } from "../controller/auth.js";
+import { Register, login } from "../controller/auth.js";
 
-const AuthRoutes=express.Router();
+const AuthRoutes = express.Router();
+AuthRoutes.post("/api/register", Register);
+AuthRoutes.post("/api/login", login);
 
-AuthRoutes.post("/api/register",Register);
-AuthRoutes.post("/api/login",Login);
 export default AuthRoutes;

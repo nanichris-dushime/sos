@@ -1,19 +1,36 @@
 import express from "express";
+import protect from "../middleware/auth.js";
+import { requireRoles } from "../middleware/roles.js";
 import {
-    getAllDoctorAvailability,
-    getSingleDoctorAvailability,
-    createDoctorAvailability,
-    updateDoctorAvailability,
-    deleteDoctorAvailability
+  listDoctorAvailability,
+  getDoctorAvailabilityById,
+  createDoctorAvailability,
+  updateDoctorAvailability,
+  deleteDoctorAvailability,
 } from "../controller/doctorAvailability.js";
 
-const DoctorAvailabilityRoutes=express.Router();
+const router = express.Router();
 
-// Basic doctor availability CRUD routes
-DoctorAvailabilityRoutes.get("/api/doctorAvailability", getAllDoctorAvailability);
-DoctorAvailabilityRoutes.get("/api/doctorAvailability/:id", getSingleDoctorAvailability);
-DoctorAvailabilityRoutes.post("/api/doctorAvailability", createDoctorAvailability);
-DoctorAvailabilityRoutes.put("/api/doctorAvailability/:id", updateDoctorAvailability);
-DoctorAvailabilityRoutes.delete("/api/doctorAvailability/:id", deleteDoctorAvailability);
+router.get("/api/doctor-availability", protect, listDoctorAvailability);
+router.get("/api/doctor-availability/:id", protect, getDoctorAvailabilityById);
+router.post(
+  "/api/doctor-availability",
+  protect,
+  requireRoles("doctor", "admin"),
+  createDoctorAvailability
+);
+router.put(
+  "/api/doctor-availability/:id",
+  protect,
+  requireRoles("doctor", "admin"),
+  updateDoctorAvailability
+);
+router.delete(
+  "/api/doctor-availability/:id",
+  protect,
+  requireRoles("doctor", "admin"),
+  deleteDoctorAvailability
+);
 
-export default DoctorAvailabilityRoutes;
+export default router;
+
