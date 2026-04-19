@@ -1,7 +1,17 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../../config/db.js";
 
-/** Matches santech: date + string time slot (e.g. "09:00-10:00") from doctor availability. */
+const WEEKDAYS = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
+
+/** Weekday + string time slot from doctor availability (recurring booking). */
 class Appointment extends Model {}
 
 Appointment.init(
@@ -30,10 +40,10 @@ Appointment.init(
       allowNull: false,
       field: "patient_id",
     },
-    appointmentDate: {
-      type: DataTypes.DATEONLY,
+    appointmentDay: {
+      type: DataTypes.ENUM(...WEEKDAYS),
       allowNull: false,
-      field: "appointment_date",
+      field: "appointment_day",
     },
     appointmentTime: {
       type: DataTypes.STRING,
@@ -45,7 +55,7 @@ Appointment.init(
       allowNull: false,
     },
     status: {
-      type: DataTypes.ENUM("pending", "scheduled", "completed", "cancelled"),
+      type: DataTypes.ENUM("pending", "approved", "completed", "cancelled"),
       allowNull: false,
       defaultValue: "pending",
     },
@@ -69,3 +79,4 @@ Appointment.init(
 );
 
 export default Appointment;
+

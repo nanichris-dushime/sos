@@ -95,7 +95,7 @@ export const listAppointments = async (req, res) => {
     const appointments = await Appointment.findAll({
       where: filter,
       order: [
-        ["appointmentDate", "ASC"],
+        ["appointmentDay", "ASC"],
         ["appointmentTime", "ASC"],
       ],
     });
@@ -361,7 +361,7 @@ export const approveAppointment = async (req, res) => {
       return res.status(400).json({ error: "Only pending appointments can be approved" });
     }
 
-    await appointment.update({ status: "scheduled" });
+    await appointment.update({ status: "approved" });
 
     const doctor = await User.findByPk(appointment.doctorId);
     const doctorName = doctor?.fullname ? ` with Dr. ${doctor.fullname}` : "";
